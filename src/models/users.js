@@ -3,14 +3,13 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 // const Jimp = require("jimp");
 const fs = require("fs").promises;
-const sgMail = require("@sendgrid/mail");
+// const sgMail = require("@sendgrid/mail");
 const uuid = require("uuid");
 
 require("dotenv").config();
 
 const signupUser = async (body) => {
   const { email, password } = body;
-
   const isSingup = await Users.create({
     email,
     password: await bcryptjs.hash(
@@ -20,24 +19,24 @@ const signupUser = async (body) => {
    verificationToken: uuid.v4(),
   });
 
-  const verificationToken = uuid.v4();
+//   const verificationToken = uuid.v4();
 
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  const msg = {
-    to: email,
-    from: "annsbchnk@gmail.com",
-    subject: "Verification email PRO_TEST",
-    text: `http://localhost:3000/api/users/verify/${verificationToken}`,
-    html: `<p>verification <a href="http://localhost:3000/api/users/verify/${verificationToken}">link</a></p>`,
-  };
-  sgMail
-    .send(msg)
-    .then(() => {
-      console.log("Email sent");
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+//   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+//   const msg = {
+//     to: email,
+//     from: "annsbchnk@gmail.com",
+//     subject: "Verification email PRO_TEST",
+//     text: `http://localhost:3000/api/users/verify/${verificationToken}`,
+//     html: `<p>verification <a href="http://localhost:3000/api/users/verify/${verificationToken}">link</a></p>`,
+//   };
+//   sgMail
+//     .send(msg)
+//     .then(() => {
+//       console.log("Email sent");
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
   return isSingup;
 };
 

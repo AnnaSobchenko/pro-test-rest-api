@@ -16,33 +16,33 @@ const signupUser = async (body) => {
       password,
       Number(process.env.BCRYPT_SALT_ROUNDS)
     ),
-   verificationToken: uuid.v4(),
+    verificationToken: uuid.v4(),
   });
 
-//   const verificationToken = uuid.v4();
+  //   const verificationToken = uuid.v4();
 
-//   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//   const msg = {
-//     to: email,
-//     from: "annsbchnk@gmail.com",
-//     subject: "Verification email PRO_TEST",
-//     text: `http://localhost:3000/api/users/verify/${verificationToken}`,
-//     html: `<p>verification <a href="http://localhost:3000/api/users/verify/${verificationToken}">link</a></p>`,
-//   };
-//   sgMail
-//     .send(msg)
-//     .then(() => {
-//       console.log("Email sent");
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
+  //   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  //   const msg = {
+  //     to: email,
+  //     from: "annsbchnk@gmail.com",
+  //     subject: "Verification email PRO_TEST",
+  //     text: `http://localhost:3000/api/users/verify/${verificationToken}`,
+  //     html: `<p>verification <a href="http://localhost:3000/api/users/verify/${verificationToken}">link</a></p>`,
+  //   };
+  //   sgMail
+  //     .send(msg)
+  //     .then(() => {
+  //       console.log("Email sent");
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
   return isSingup;
 };
 
 const loginUser = async (body) => {
   const { email, password } = body;
-//   let user = await Users.findOne({ email, verify: true });
+  //   let user = await Users.findOne({ email, verify: true });
   let user = await Users.findOne({ email });
   const isPasswordCorrect = await bcryptjs.compare(password, user.password);
   if (isPasswordCorrect) {
@@ -71,7 +71,7 @@ const currentUser = async (token) => {
   return user;
 };
 
-// const verificationUser = async (verificationToken) => {  
+// const verificationUser = async (verificationToken) => {
 //   const user = await Users.findOneAndUpdate(
 //     verificationToken,
 //     {
@@ -117,6 +117,6 @@ module.exports = {
   loginUser,
   logoutUser,
   currentUser,
-//   verificationUser,
-//   verificationSecondUser,
+  //   verificationUser,
+  //   verificationSecondUser,
 };

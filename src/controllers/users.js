@@ -3,26 +3,25 @@ const {
   loginUser,
   logoutUser,
   currentUser,
-//   verificationUser,
-//   verificationSecondUser,
+  //   verificationUser,
+  //   verificationSecondUser,
 } = require("../models/users");
 
-const signupUserControl = async (req, res, next) => {    
-  const user = await signupUser(req.body);  
+const signupUserControl = async (req, res, next) => {
+  const user = await signupUser(req.body);
   res.status(201).json({
     contentType: "application/json",
-    ResponseBody:  user,
+    ResponseBody: user,
   });
 };
 
 const signinUserControl = async (req, res, next) => {
-  const { token, email, subscription } = await loginUser(req.body);
+  const { token, email } = await loginUser(req.body);
   res.status(201).json({
     contentType: "application/json",
     ResponseBody: {
       user: {
         email: email,
-        subscription: subscription,
       },
       token: token,
     },
@@ -58,6 +57,6 @@ module.exports = {
   signinUserControl,
   logoutUserControl,
   currentUserControl,
-//   verificationEmailControl,
-//   resendingVerificationEmailControl,
+  //   verificationEmailControl,
+  //   resendingVerificationEmailControl,
 };

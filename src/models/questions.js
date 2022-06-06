@@ -1,4 +1,4 @@
-const technicalQuestion = (token) => {};
+const technicalQuestion = () => {};
 const theoryQuestion = (token) => {};
 
 module.exports = {

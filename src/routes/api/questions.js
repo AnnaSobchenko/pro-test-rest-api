@@ -6,7 +6,7 @@ const {
   getTheoryQuestion,
 } = require("../../controllers/questions");
 
-router.get("test/theory", getTheoryQuestion);
-router.get("test/technical", getTechnicalQuestion);
+router.get("/theory", getTheoryQuestion);
+router.get("/technical", getTechnicalQuestion);
 
-module.exports = { questionsRouter: router };
+module.exports = router;

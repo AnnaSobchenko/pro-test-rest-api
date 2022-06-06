@@ -1,9 +1,12 @@
-const getTechnicalQuestion = async (res, req, next) => {
-  const question = technicalQuestion(req.user.token);
+const { Question } = require("../db/questionsModels");
+
+const getTheoryQuestion = async (req, res, next) => {
+  const question = await Question.find();
   res.status(200).send(question);
 };
-const getTheoryQuestion = async (res, req, next) => {
-  const question = theoryQuestion(req.user.token);
+
+const getTechnicalQuestion = async (req, res, next) => {
+  const question = technicalQuestion(req.user.token);
   res.status(200).send(question);
 };
 

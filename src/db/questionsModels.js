@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const questionSchema = new mongoose.Schema({
+const questionTheoriesSchema = new mongoose.Schema({
   question: {
     type: String,
     required: [true],
@@ -19,8 +19,38 @@ const questionSchema = new mongoose.Schema({
   },
 });
 
-const Question = mongoose.model("questions-theories", questionSchema);
+const QuestionTheories = mongoose.model(
+  "questions-theories",
+  questionTheoriesSchema
+);
 
 module.exports = {
-  Question,
+  QuestionTheories,
+};
+const questionTechnicalsSchema = new mongoose.Schema({
+  question: {
+    type: String,
+    required: [true],
+  },
+  questionId: {
+    type: String,
+    required: [true],
+    unique: true,
+  },
+  answers: {
+    type: Object,
+    default: [],
+  },
+  rightAnswer: {
+    type: String,
+  },
+});
+
+const QuestionTechnicals = mongoose.model(
+  "questions-technicals",
+  questionTechnicalsSchema
+);
+
+module.exports = {
+  QuestionTechnicals,
 };

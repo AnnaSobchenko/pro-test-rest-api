@@ -1,12 +1,18 @@
-const { Question } = require("../db/questionsModels");
+const {
+  QuestionTheories,
+  QuestionTechnicals,
+} = require("../db/questionsModels");
+
+const { technicalQuestion } = require("../models/questions");
 
 const getTheoryQuestion = async (req, res, next) => {
-  const question = await Question.find();
+  const question = await QuestionTheories.find();
   res.status(200).send(question);
 };
 
 const getTechnicalQuestion = async (req, res, next) => {
-  const question = technicalQuestion(req.user.token);
+  const question = await technicalQuestion();
+  console.log("question :>> ", question);
   res.status(200).send(question);
 };
 

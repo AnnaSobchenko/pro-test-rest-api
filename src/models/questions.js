@@ -15,25 +15,22 @@ function randomQuestions(questions) {
       i = i - 1;
     }
   }
-  console.log("numQuestionsArr", numQuestionsArr);
   numQuestionsArr.map((el) => questionsTwelve.push(questions[el]));
 
   return questionsTwelve;
 }
-// написала функцию по формированию массива из чисел случайного порядка. Может нам подойдет
-// в консоле можно запустить посмотреть
-// console.log(
-//   randomQuestion([
-//     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-//     22, 23, 24, 25, 26,
-//   ])
-// );
+
 const technicalQuestion = async () => {
-  const question = await QuestionTechnicals.find();
-  const getRandomQuestion = await randomQuestions(question);
+  const questions = await QuestionTechnicals.find();
+  const getRandomQuestion = await randomQuestions(questions);
   return getRandomQuestion;
 };
-const theoryQuestion = () => {};
+
+const theoryQuestion = async () => {
+  const questions = await QuestionTheories.find();
+  const getRandomQuestion = await randomQuestions(questions);
+  return getRandomQuestion;
+};
 
 module.exports = {
   theoryQuestion,

@@ -15,14 +15,13 @@ const {
 
 const router = express.Router();
 
-
 router.post(
   "/signup",
   postAuthValidation,
   catchSignupErrors(signupUserControl)
 );
 router.post("/login", postAuthValidation, catchLogErrors(signinUserControl));
-router.get("/logout", authorize, catchErrors(logoutUserControl));
+router.post("/logout", authorize, catchErrors(logoutUserControl));
 router.get("/current", authorize, catchErrors(currentUserControl));
 
 module.exports = router;

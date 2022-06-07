@@ -4,11 +4,12 @@ const cors = require("cors");
 
 require("dotenv").config();
 
-// const contactsRouter = require("./routes/api/contacts");
 const usersRouter = require("./routes/api/users");
 const questionsRouter = require("./routes/api/questions");
 
 const app = express();
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -16,7 +17,35 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-// app.use("/api/contacts", contactsRouter);
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "PRO-TEST API",
+      description: "PRO-TEST information",
+      contact: {
+        name: "Students GoIT",
+      },
+      servers: ["http://localhost:3001"],
+    },
+  },
+  apis: ["app.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Routes
+// /**
+//  * @swagger
+//  * /auth/signup:
+//  *   post:
+//  *    description: User to auth user
+//  *      responses:
+//  *        '201':
+//  *            description: successful response
+//  */
+
 app.use("/auth", usersRouter);
 app.use("/test", questionsRouter);
 // app.use('/auth', usersRouter);

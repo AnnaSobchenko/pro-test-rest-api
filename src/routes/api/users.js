@@ -15,6 +15,7 @@ const {
 
 const router = express.Router();
 
+
 router.post(
   "/signup",
   postAuthValidation,
@@ -23,7 +24,5 @@ router.post(
 router.post("/login", postAuthValidation, catchLogErrors(signinUserControl));
 router.get("/logout", authorize, catchErrors(logoutUserControl));
 router.get("/current", authorize, catchErrors(currentUserControl));
-// router.get("/verify/:verificationToken", catchErrors(verificationUserEmail));
-// router.post("/users/verify/", catchErrors(resendingVerificationUserEmail));
 
-module.exports =  router;
+module.exports = router;

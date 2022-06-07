@@ -7,6 +7,7 @@ const {
 //   verificationSecondUser,
 } = require("../models/users");
 
+
 const signupUserControl = async (req, res, next) => {    
   const user = await signupUser(req.body);  
   res.status(201).json({

@@ -1,0 +1,597 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.4",
+    "title": "Pro Test API docs",
+    "description": "API documentation for GoIT project 'PRO-TEST'. [Backend github repository](https://github.com/AnnaSobchenko/pro-test-rest-api)"
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "https:localhost:3001" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "QA-test",
+      "description": "QA-test endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User authentication",
+        "parameters": [],
+        "requestBody": {
+          "description": "Authentication's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "403": {
+            "description": "Email doesn't exist / Password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "400": {
+            "description": "No token provided",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Invalid user / Invalid session",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/test/technical": {
+      "get": {
+        "tags": ["Testing technical"],
+        "summary": "Get QA tech test questions",
+        "parameters": [],        
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QATechnicalTest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (no token provided)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/test/theory": {
+      "get": {
+        "tags": ["Testing theory"],
+        "summary": "Get QA theory test questions",
+        "parameters": [],       
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QATheoryTest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (no token provided)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "507f1f77bcf86cd799439011"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Session's access token (needed for all requests)",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZmMyMDg1YmQwOTM2NTI4MTA3Y2UyNzQiLCJzaWQiOiI1ZmMyZDJmY2UxZDIwNTA2NzAyYmRkMjIiLCJpYXQiOjE2MDY2MDM1MTYsImV4cCI6MTYwNjYwNzExNn0.rJ_QjU4KvA76H96RHsvOBChK0Vjbd0NmqjMxdQVJIXA"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Session's refresh token (needed for /auth/refresh)",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZmMyMDg1YmQwOTM2NTI4MTA3Y2UyNzQiLCJzaWQiOiI1ZmMyZDJmY2UxZDIwNTA2NzAyYmRkMjIiLCJpYXQiOjE2MDY2MDM1MTYsImV4cCI6MTYwNjYwNzExNn0.rJ_QjU4KvA76H96RHsvOBChK0Vjbd0NmqjMxdQVJIXB"
+          },
+          "sid": {
+            "type": "string",
+            "description": "Session's id (needed for /auth/refresh)",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "userData": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "507f1f77bcf86cd799439012"
+              }
+            }
+          }
+        }
+      },
+      "QATechnicalTest": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string",
+              "description": "A question"
+            },
+            "questionId": {
+              "type": "integer",
+              "description": "Question's id"
+            },
+            "answers": {
+              "type": "array",
+              "description": "Answers to the question",
+              "items": {
+                "type": "string",
+                "description": "Answer options"
+              }
+            }
+          }
+        },
+        "example": [
+          {
+            "question": "Item testing (or side testing) allows you to test individual work of source code units",
+            "questionId": 24,
+            "answers": [
+              "Currency testing",
+              "Testing the web application",
+              "Functional testing",
+              "Interface testing",
+              "Gamma testing",
+              "I don't know"
+            ]
+          },
+          {
+            "question": "What methodology are these 4 stages about: Inception, Elaboration, Construction, Transition",
+            "questionId": 8,
+            "answers": [
+              "RUP",
+              "Kanban",
+              "Scrum",
+              "Agile",
+              "Waterfall",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "What is formal testing?",
+            "questionId": 14,
+            "answers": [
+              "Verification of software, according to the test plan, test procedures and relevant documentation, taking into account the wishes of the client",
+              "Validation of software, according to the test plan, test procedures and relevant documentation, taking into account the wishes of the client",
+              "Verification of software, according to test procedures and relevant documentation, without taking into account the wishes of the client",
+              "I don't know"
+            ]
+          },
+          {
+            "question": "Validation is – ",
+            "questionId": 3,
+            "answers": [
+              "Answers the question whether the product is being created correctly in terms of customer expectations",
+              "During the validation process, we make sure that the product fully complies with the behavior that is expected of it and that the client knows about the presence of such functionality",
+              "Validation, in its essence, largely includes an overall assessment of the software and can be based solely on subjective opinion regarding the correct operation of the application or its components",
+              "Options 1 and 3 are correct",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "The test plan answers questions like this",
+            "questionId": 19,
+            "answers": [
+              "What's need to be tested",
+              "What's going to be tested",
+              "How and when is it going to be tested",
+              "Test start and end criteria",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "Agile's main ideas",
+            "questionId": 7,
+            "answers": [
+              "People and interactions are more important than processes and tools",
+              "A working product is more important than comprehensive documentation",
+              "Cooperation with the customer is more important than agreeing on the terms of the contract",
+              "Being ready for change is more important than following the original plan",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "What is superfluous in the criteria for completing testing",
+            "questionId": 21,
+            "answers": [
+              "Testing report",
+              "Metrics",
+              "Test Analysis Report",
+              "Test case",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "What are the tasks of the Product Owner?",
+            "questionId": 11,
+            "answers": [
+              "Setting tasks and monitoring deadlines",
+              "Control of budget spending",
+              "Maintenance of project documentation (technical specifications, contracts, acts, invoices, estimates, reports)",
+              "And once again - BUDGETS and TERMS - this is what is most important in his work",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "Interface testing checks the interaction of individual modules. Most often used to test the user interface of GUI applications",
+            "questionId": 25,
+            "answers": [
+              "Currency testing",
+              "Testing the web application",
+              "Functional testing",
+              "Interface testing",
+              "Gamma testing",
+              "I don't know"
+            ]
+          },
+          {
+            "question": "The correct sequence of Scrum elements",
+            "questionId": 9,
+            "answers": [
+              "Sprint Planning and Sprint Backlog Creation - Working on the sprint. Scrum meetings - Product testing and demonstration - Retrospective. Planning the next sprint",
+              "Creating a product backlog - Working on a sprint. Scrum meetings - Product testing and demonstration - Retrospective. Planning the next sprint",
+              "Product Backlog Creation - Sprint Planning and Sprint Backlog Creation - Product Testing and Demo - Retrospective. Planning the next sprint",
+              "Creating a Product Backlog - Planning a Sprint and creating a Sprint Backlog - Working on a Sprint. Scrum meetings - Retrospective. Planning the next sprint",
+              "Creating a Product Backlog - Planning a Sprint and creating a Sprint Backlog - Working on a Sprint. Scrum meetings - Product testing and demonstration",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "THIS software development methodology is mainly aimed at reducing the work being done at the moment. In this methodology: there are no time limits for either tasks or sprints; there are more and fewer tasks; There is no direct need to set deadlines for completing tasks, but you still need to measure them for a general presentation. What methodology are we talking about?",
+            "questionId": 5,
+            "answers": [
+              "Waterfall",
+              "Scrum",
+              "Agile",
+              "Kanban",
+              "This definition applies to all methodologies",
+              "There is not a right option"
+            ]
+          },
+          {
+            "question": "How many testing principles are there?",
+            "questionId": 1,
+            "answers": ["5", "6", "7", "8", "9", "I don't know"]
+          }
+        ]
+      },
+      "QATheoryTest": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string",
+              "description": "A question"
+            },
+            "questionId": {
+              "type": "integer",
+              "description": "Question's id"
+            },
+            "answers": {
+              "type": "array",
+              "description": "Answers to the question",
+              "items": {
+                "type": "string",
+                "description": "Answer options"
+              }
+            }
+          }
+        },
+        "example": [
+          {
+            "question": "White box testing does not concern",
+            "questionId": 21,
+            "answers": [
+              "Decision-making",
+              "Causes and effects of coverage",
+              "Multiple coverage conditions",
+              "Coverage Statement",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "What are the main types of locators in Selenium?",
+            "questionId": 4,
+            "answers": [
+              "ID, ClassName",
+              "Name, TagName",
+              "LinkText, PartialLinkText",
+              "Xpath, CSS Selector, DOM",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "Most often, viewing items in the Google Chrome browser on Mac is launched by this key combination",
+            "questionId": 7,
+            "answers": [
+              "Cmd+Opt+O",
+              "Cmd+Opt+R",
+              "Cmd+Opt+J",
+              "Cmd+Opt+N",
+              "Cmd+Opt+W"
+            ]
+          },
+          {
+            "question": "Testing outside of normal performance is",
+            "questionId": 15,
+            "answers": [
+              "Stress testing",
+              "Performance testing",
+              "Functional testing",
+              "Centiliter",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "What does 'CI' stands for in QA?",
+            "questionId": 1,
+            "answers": [
+              "Connection interface",
+              "Nothing",
+              "Continuous Integration",
+              "Centiliter"
+            ]
+          },
+          {
+            "question": "navigate().refresh(). This navigation command in Selenium:",
+            "questionId": 10,
+            "answers": [
+              "Returns the user to the previous page from the browser history",
+              "Allows the user to navigate to the next page according to the browser history",
+              "Used to refresh the browser page",
+              "Allows the user to open a new window in the browser and follow the specified URL",
+              "There is no such command"
+            ]
+          },
+          {
+            "question": "______ is an existing defect that has not yet caused the failure because the conditions required to trigger the defect are not met",
+            "questionId": 14,
+            "answers": [
+              "Hidden defect and disguised defect",
+              "Hidden defect",
+              "Disguised defect",
+              "Defect",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "What's wrong appealing to Smoke and sanity tests?",
+            "questionId": 18,
+            "answers": [
+              "If both are running, do sanity tests first and then smoke testing",
+              "Sanity Testing is also called Tester Acceptance Testing",
+              "Smoke and sanity tests can be performed using an automation tool",
+              "Smoke testing performed for a specific build is also called build verification test",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "navigate().back(). This navigation command in Selenium:",
+            "questionId": 8,
+            "answers": [
+              "Returns the user to the previous page from the browser history",
+              "Allows the user to navigate to the next page according to the browser history",
+              "Used to refresh the browser page",
+              "Allows the user to open a new window in the browser and follow the specified URL",
+              "There is no such command"
+            ]
+          },
+          {
+            "question": "The Paradox Pesticide Testing Principle suggests that",
+            "questionId": 19,
+            "answers": [
+              "Finding and eliminating defects does not help if the system is unstable",
+              "Testing is done differently in a different context",
+              "Test cases should be reviewed and revised regularly",
+              "Clustering modules that contain most of the defects",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "Which of the following is not part of specification-based testing?",
+            "questionId": 22,
+            "answers": [
+              "State transition",
+              "Decision table",
+              "Boundary value analysis",
+              "Data stream",
+              "All options are correct",
+              "All options are incorrect"
+            ]
+          },
+          {
+            "question": "navigate().to(). This navigation command in Selenium:",
+            "questionId": 11,
+            "answers": [
+              "Returns the user to the previous page from the browser history",
+              "Allows the user to navigate to the next page according to the browser history",
+              "Used to refresh the browser page",
+              "Allows the user to open a new window in the browser and follow the specified URL",
+              "There is no such command"
+            ]
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

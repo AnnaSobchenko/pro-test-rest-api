@@ -2,7 +2,7 @@ const express = require("express");
 const {getContacts, getContact} = require("../../controllers/contactsController")
 const { catchErrors } = require("../../middlewares/catchErrors");
 
-const router = express.router();
+const router = express.Router();
 
 router.get("/", catchErrors(getContacts));
 

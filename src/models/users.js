@@ -10,7 +10,7 @@ require("dotenv").config();
 
 const signupUser = async (body) => {
   const { email, password } = body;
-  const isSingup = await Users.create({
+  await Users.create({
     email,
     password: await bcryptjs.hash(
       password,
@@ -18,26 +18,12 @@ const signupUser = async (body) => {
     ),
     verificationToken: uuid.v4(),
   });
-
-  //   const verificationToken = uuid.v4();
-
-  //   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  //   const msg = {
-  //     to: email,
-  //     from: "annsbchnk@gmail.com",
-  //     subject: "Verification email PRO_TEST",
-  //     text: `http://localhost:3000/api/users/verify/${verificationToken}`,
-  //     html: `<p>verification <a href="http://localhost:3000/api/users/verify/${verificationToken}">link</a></p>`,
-  //   };
-  //   sgMail
-  //     .send(msg)
-  //     .then(() => {
-  //       console.log("Email sent");
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  return isSingup;
+  let user = await Users.findOne({ email });
+  const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+  user = await Users.findOneAndUpdate({ email }, { token }, { new: true });
+  return user;
 };
 
 const loginUser = async (body) => {
@@ -64,10 +50,7 @@ const logoutUser = async (token) => {
 };
 
 const currentUser = async (token) => {
-  const user = await Users.findOne(
-    { token },
-    { email: 1, subscription: 1, _id: 0 }
-  );
+  const user = await Users.findOne({ token }, { email: 1, _id: 0 });
   return user;
 };
 

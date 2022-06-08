@@ -1,7 +1,4 @@
-const {
-  QuestionTheories,
-  QuestionTechnical,
-} = require("../db/questionsModels");
+const { QuestionTechnical, QuestionTheory } = require("../db/questionsModel");
 
 function randomQuestions(questions) {
   let numQuestionsArr = [];
@@ -21,15 +18,20 @@ function randomQuestions(questions) {
 }
 
 const technicalQuestion = async () => {
-  const questions = await QuestionTechnical.find();
+  const questions = await QuestionTechnical.find(
+    {},
+    { _id: 1, question: 1, answers: 1 }
+  );
   const getRandomQuestion = await randomQuestions(questions);
   return getRandomQuestion;
 };
 
 const theoryQuestion = async () => {
-  const questionsTeor = await QuestionTheories.find();
-  console.log("questions :>> ", questionsTeor);
-  const getRandomQuestion = await randomQuestions(questionsTeor);
+  const questions = await QuestionTheory.find(
+    {},
+    { _id: 1, question: 1, answers: 1 }
+  );
+  const getRandomQuestion = await randomQuestions(questions);
   return getRandomQuestion;
 };
 

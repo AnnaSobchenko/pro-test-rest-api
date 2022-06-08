@@ -1,6 +1,6 @@
 const {
   QuestionTheories,
-  QuestionTechnicals,
+  QuestionTechnical,
 } = require("../db/questionsModels");
 
 function randomQuestions(questions) {
@@ -21,14 +21,15 @@ function randomQuestions(questions) {
 }
 
 const technicalQuestion = async () => {
-  const questions = await QuestionTechnicals.find();
+  const questions = await QuestionTechnical.find();
   const getRandomQuestion = await randomQuestions(questions);
   return getRandomQuestion;
 };
 
 const theoryQuestion = async () => {
-  const questions = await QuestionTheories.find();
-  const getRandomQuestion = await randomQuestions(questions);
+  const questionsTeor = await QuestionTheories.find();
+  console.log("questions :>> ", questionsTeor);
+  const getRandomQuestion = await randomQuestions(questionsTeor);
   return getRandomQuestion;
 };
 

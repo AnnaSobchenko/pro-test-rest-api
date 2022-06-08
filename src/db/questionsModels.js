@@ -27,7 +27,7 @@ const QuestionTheories = mongoose.model(
 module.exports = {
   QuestionTheories,
 };
-const questionTechnicalsSchema = new mongoose.Schema({
+const questionTechnicalSchema = new mongoose.Schema({
   question: {
     type: String,
     required: [true],
@@ -46,11 +46,11 @@ const questionTechnicalsSchema = new mongoose.Schema({
   },
 });
 
-const QuestionTechnicals = mongoose.model(
+const QuestionTechnical = mongoose.model(
   "questions-technicals",
-  questionTechnicalsSchema
+  questionTechnicalSchema
 );
 
 module.exports = {
-  QuestionTechnicals,
+  QuestionTechnical,
 };

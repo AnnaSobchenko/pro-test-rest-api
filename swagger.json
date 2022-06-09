@@ -1,13 +1,12 @@
 {
   "openapi": "3.0.1",
-  "info": {
-    "version": "2.0.4",
+  "info": {    
     "title": "Pro Test API docs",
     "description": "API documentation for GoIT project 'PRO-TEST'. [Backend github repository](https://github.com/AnnaSobchenko/pro-test-rest-api)"
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "https:localhost:3001" }],
+  "servers": [{ "url": "http://localhost:3001" }],
   "tags": [
     {
       "name": "Auth",
@@ -185,12 +184,13 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "user123@mail.com"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "example": "user123"
           }
         }
       },
@@ -200,12 +200,13 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example":"user123@mail.com"
           },
-          "id": {
+          "token": {
             "type": "string",
-            "description": "User's id",
-            "example": "507f1f77bcf86cd799439011"
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjliNmEzMmUzM2Q1YzBjM2Y0MjNhY2UiLCJpYXQiOjE2NTQ2NzA4MjIsImV4cCI6MTY1NDY3NDQyMn0.qYMcQgrq_gg19rttwCHXLT2NHr0wJAjjYmWPMZXy1fw"
           }
         }
       },
@@ -216,47 +217,29 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "user123@mail.com"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "example": "user123"
           }
         }
       },
       "LoginResponse": {
         "type": "object",
         "properties": {
-          "accessToken": {
+          "email": {
             "type": "string",
-            "description": "Session's access token (needed for all requests)",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZmMyMDg1YmQwOTM2NTI4MTA3Y2UyNzQiLCJzaWQiOiI1ZmMyZDJmY2UxZDIwNTA2NzAyYmRkMjIiLCJpYXQiOjE2MDY2MDM1MTYsImV4cCI6MTYwNjYwNzExNn0.rJ_QjU4KvA76H96RHsvOBChK0Vjbd0NmqjMxdQVJIXA"
+            "description": "User's email",
+            "format": "email",
+            "example":"user123@mail.com"
           },
-          "refreshToken": {
+          "token": {
             "type": "string",
-            "description": "Session's refresh token (needed for /auth/refresh)",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZmMyMDg1YmQwOTM2NTI4MTA3Y2UyNzQiLCJzaWQiOiI1ZmMyZDJmY2UxZDIwNTA2NzAyYmRkMjIiLCJpYXQiOjE2MDY2MDM1MTYsImV4cCI6MTYwNjYwNzExNn0.rJ_QjU4KvA76H96RHsvOBChK0Vjbd0NmqjMxdQVJIXB"
-          },
-          "sid": {
-            "type": "string",
-            "description": "Session's id (needed for /auth/refresh)",
-            "example": "507f1f77bcf86cd799439011"
-          },
-          "userData": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              },
-              "id": {
-                "type": "string",
-                "description": "User's id",
-                "example": "507f1f77bcf86cd799439012"
-              }
-            }
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjliNmEzMmUzM2Q1YzBjM2Y0MjNhY2UiLCJpYXQiOjE2NTQ2NzA4MjIsImV4cCI6MTY1NDY3NDQyMn0.qYMcQgrq_gg19rttwCHXLT2NHr0wJAjjYmWPMZXy1fw"
           }
         }
       },

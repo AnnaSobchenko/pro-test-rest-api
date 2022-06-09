@@ -23,7 +23,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/auth", usersRouter);
 app.use("/test", questionsRouter);
-// app.use('/auth', usersRouter);
 // app.use("/avatars", express.static("public/avatars"));
 
 app.use((req, res) => {

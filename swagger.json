@@ -1,6 +1,6 @@
 {
   "openapi": "3.0.1",
-  "info": {    
+  "info": {
     "title": "Pro Test API docs",
     "description": "API documentation for GoIT project 'PRO-TEST'. [Backend github repository](https://github.com/AnnaSobchenko/pro-test-rest-api)"
   },
@@ -11,6 +11,10 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Contacts",
+      "description": "Contacts of the development team "
     },
     {
       "name": "QA-test",
@@ -122,9 +126,9 @@
     },
     "/test/technical": {
       "get": {
-        "tags": ["Testing technical"],
-        "summary": "Get QA tech test questions",
-        "parameters": [],        
+        "tags": ["QA-test"],
+        "summary": "Get QA technical test questions",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -149,9 +153,36 @@
     },
     "/test/theory": {
       "get": {
-        "tags": ["Testing theory"],
+        "tags": ["QA-test"],
         "summary": "Get QA theory test questions",
-        "parameters": [],       
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QATheoryTest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (no token provided)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "Contacts of the development team",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -201,7 +232,7 @@
             "type": "string",
             "description": "User's email",
             "format": "email",
-            "example":"user123@mail.com"
+            "example": "user123@mail.com"
           },
           "token": {
             "type": "string",
@@ -234,7 +265,7 @@
             "type": "string",
             "description": "User's email",
             "format": "email",
-            "example":"user123@mail.com"
+            "example": "user123@mail.com"
           },
           "token": {
             "type": "string",

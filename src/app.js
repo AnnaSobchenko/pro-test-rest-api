@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const usersRouter = require("./routes/api/users");
 const questionsRouter = require("./routes/api/questions");
+const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
 // const swaggerJsDoc = require("swagger-jsdoc");
@@ -23,6 +24,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/auth", usersRouter);
 app.use("/test", questionsRouter);
+app.use("/contacts", contactsRouter);
 // app.use("/avatars", express.static("public/avatars"));
 
 app.use((req, res) => {

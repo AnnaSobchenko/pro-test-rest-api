@@ -3,7 +3,7 @@ module.exports.catchErrors = (middleware) => {
       try {
         await middleware(req, res);
       } catch (err) {
-        return res.status(404).json({ status: "Not found , catch" });
+        return res.status(404).json({ status: "Not found" });
       }
     };
   };
@@ -25,17 +25,8 @@ module.exports.catchErrors = (middleware) => {
         await middleware(req, res);
       } catch (err) {
         return res.status(401).json({
-          ResponseBody: { message: "Email or password is wrong or none verify" },
+          ResponseBody: { message: "Email doesn't exist / Password is wrong" },
         });
-      }
-    };
-  };
-  module.exports.catchVerifyErrors = (middleware) => {
-    return async (req, res) => {
-      try {
-        await middleware(req, res);
-      } catch (err) {
-        return res.status(400).json({  message: "Verification has already been passed" });
       }
     };
   };

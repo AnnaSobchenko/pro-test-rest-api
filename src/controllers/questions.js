@@ -16,14 +16,13 @@ const getTechnicalQuestion = async (req, res, next) => {
 };
 
 const checkTheoryQuestion = async (req, res, next) => {
-  const result = await theoryQuestionCheck(req);
-  res.status(200).send(result);
+  const result = await theoryQuestionCheck(req.body);
+  res.status(200).send({"rightAnswers": result});
 };
 
 const checkTechnicalQuestion = async (req, res, next) => {
-  console.log("req.body", req.body);
   const result = await technicalQuestionCheck(req.body);
-  res.status(200).send(result);
+  res.status(200).send({"rightAnswers": result });
 };
 
 module.exports = {

@@ -35,7 +35,7 @@ const theoryQuestion = async () => {
   return getRandomQuestion;
 };
 
-const technicalQuestionAll = async () => {
+const technicalQuestionCheck = async () => {
   const questions = await QuestionTechnical.find(
 		{},
 		{ _id: 1, rightAnswer: 1 }
@@ -44,7 +44,7 @@ const technicalQuestionAll = async () => {
   return questions;
 };
 
-const theoryQuestionAll = async () => {
+const theoryQuestionCheck = async () => {
   const questions = await QuestionTheory.find(
 		{},
 		{ _id: 1, rightAnswer: 1 }
@@ -56,6 +56,6 @@ const theoryQuestionAll = async () => {
 module.exports = {
   theoryQuestion,
   technicalQuestion,
-  technicalQuestionAll,
-  theoryQuestionAll,
+  technicalQuestionCheck,
+  theoryQuestionCheck,
 };

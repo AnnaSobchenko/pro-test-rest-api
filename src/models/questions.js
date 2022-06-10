@@ -17,6 +17,23 @@ function randomQuestions(questions) {
   return questionsTwelve;
 }
 
+function resultCount(answers, data) {
+  let result = 0;
+  console.log('answers', answers)
+
+  for (let i = 0; i < answers.length; i = i + 1) {
+    data.map((el) => {          
+      if (
+        el._id === answers[i].questionId &&
+        el.rightAnswer === answers[i].userAnswer
+      ) {
+        result = result + 1;       
+      }
+    });
+  }
+  return result
+}
+
 const technicalQuestion = async () => {
   const questions = await QuestionTechnical.find(
     {},
@@ -35,22 +52,24 @@ const theoryQuestion = async () => {
   return getRandomQuestion;
 };
 
-const technicalQuestionCheck = async () => {
+const technicalQuestionCheck = async (answers) => {
   const questions = await QuestionTechnical.find(
 		{},
 		{ _id: 1, rightAnswer: 1 }
 	);
+  console.log('questions', questions)
+  console.log('answers', answers)
   
-  return questions;
+  return resultCount(answers,questions);
 };
 
-const theoryQuestionCheck = async () => {
+const theoryQuestionCheck = async (answers) => {
   const questions = await QuestionTheory.find(
 		{},
 		{ _id: 1, rightAnswer: 1 }
 	);
   
-  return questions;
+  return resultCount(answers,questions);
 };
 
 module.exports = {

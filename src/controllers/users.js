@@ -3,8 +3,7 @@ const {
   loginUser,
   logoutUser,
   currentUser,
-  //   verificationUser,
-  //   verificationSecondUser,
+  refreshMToken,
 } = require("../models/users");
 
 const signupUserControl = async (req, res, next) => {
@@ -38,11 +37,15 @@ const currentUserControl = async (req, res, next) => {
   res.status(200).send(user);
 };
 
+const refreshTokenControl = async (req, res, next) => {
+  const refreshToken = await refreshMToken(req.user.token);
+  res.status(200).send(refreshToken);
+};
+
 module.exports = {
   signupUserControl,
   signinUserControl,
   logoutUserControl,
   currentUserControl,
-  //   verificationEmailControl,
-  //   resendingVerificationEmailControl,
+  refreshTokenControl,
 };

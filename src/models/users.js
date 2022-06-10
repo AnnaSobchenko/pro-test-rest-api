@@ -1,14 +1,12 @@
 const { Users } = require("../db/usersModel");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const Jimp = require("jimp");
 const fs = require("fs").promises;
-// const sgMail = require("@sendgrid/mail");
 const uuid = require("uuid");
 
 require("dotenv").config();
 
-const signupUser = async (body) => {
+const signupUser = async body => {
   const { email, password } = body;
   await Users.create({
     email,
@@ -26,9 +24,8 @@ const signupUser = async (body) => {
   return user;
 };
 
-const loginUser = async (body) => {
+const loginUser = async body => {
   const { email, password } = body;
-  //   let user = await Users.findOne({ email, verify: true });
   let user = await Users.findOne({ email });
   const isPasswordCorrect = await bcryptjs.compare(password, user.password);
   if (isPasswordCorrect) {
@@ -40,7 +37,7 @@ const loginUser = async (body) => {
   }
 };
 
-const logoutUser = async (token) => {
+const logoutUser = async token => {
   const user = await Users.findOneAndUpdate(
     { token },
     { token: null },
@@ -49,57 +46,33 @@ const logoutUser = async (token) => {
   return user;
 };
 
-const currentUser = async (token) => {
+const currentUser = async token => {
   const user = await Users.findOne({ token }, { email: 1, _id: 0 });
   return user;
 };
 
-// const verificationUser = async (verificationToken) => {
-//   const user = await Users.findOneAndUpdate(
-//     verificationToken,
-//     {
-//       verificationToken: null,
-//       verify: true,
-//     },
+const refreshMToken = async token => {
+  const userOld = await Users.findOne({ token }, { email: 1, _id: 0 });
+  const accessToken = jwt.sign({ sub: userOld._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+  const refreshToken = jwt.sign({ sub: userOld._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 
-//     { new: true }
-//   );
-//   return user;
-// };
+  const user = await Users.findOneAndUpdate(
+    { token: accessToken },
+    { refreshToken },
+    { new: true }
+  );
 
-// const verificationSecondUser = async (body) => {
-//   const { email } = body;
-//   const user = await Users.findOne({ email });
-//   if (!user.verify) {
-//     const verificationToken = uuid.v4();
-
-//     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//     const msg = {
-//       to: email, // Change to your recipient
-//       from: "annsbchnk@gmail.com", // Change to your verified sender
-//       subject: "Sending  verification email",
-//       text: `http://localhost:3000/api/users/verify/${verificationToken}`,
-//       html: `<p>verification <a href="http://localhost:3000/api/users/verify/${verificationToken}">link</a></p>`,
-//     };
-//    return await  sgMail
-//       .send(msg)
-//       .then(() => {
-//         console.log("Email sent");
-//         return true;
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   } else {
-//     return false;
-//   }
-// };
+  return user;
+};
 
 module.exports = {
   signupUser,
   loginUser,
   logoutUser,
   currentUser,
-  //   verificationUser,
-  //   verificationSecondUser,
+  refreshMToken,
 };

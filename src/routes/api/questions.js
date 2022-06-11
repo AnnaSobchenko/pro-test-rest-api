@@ -11,7 +11,7 @@ const {
 
 router.get("/theory", catchErrors(getTheoryQuestion));
 router.get("/technical", catchErrors(getTechnicalQuestion));
-router.get("/theory/check", catchErrors(checkTheoryQuestion));
-router.get("/technical/check", catchErrors(checkTechnicalQuestion));
+router.post("/theory/check", catchErrors(checkTheoryQuestion));
+router.post("/technical/check", catchErrors(checkTechnicalQuestion));
 
 module.exports = router;

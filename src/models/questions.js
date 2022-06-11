@@ -18,14 +18,18 @@ function randomQuestions(questions) {
 }
 
 function resultCount(answers, data) {
+	// console.log("answers:", answers);
+	// console.log("data:", data);
 	let result = 0;
-  answers.forEach((answer) => {
-		const element = data.map((el) => el._id.toString()).indexOf(answer.questionId);
-    if (data[element].rightAnswer === answer.userAnswer) {
+	answers.forEach((answer) => {
+		const element = data
+			.map((el) => el._id.toString())
+			.indexOf(answer.questionId);
+		if (data[element].rightAnswer === answer.userAnswer) {
 			result += 1;
 		}
-  });
-  console.log("result: ", result);
+	});
+	console.log("rightAnswers: ", result);
 	return result;
 }
 
@@ -52,13 +56,15 @@ const technicalQuestionCheck = async (answers) => {
 		{},
 		{ _id: 1, rightAnswer: 1 }
 	);
+	console.log("questions (technicalQuestionCheck):", questions.length);
+	console.log("answers (technicalQuestionCheck):", answers);
 	return resultCount(answers, questions);
 };
 
 const theoryQuestionCheck = async (answers) => {
 	const questions = await QuestionTheory.find({}, { _id: 1, rightAnswer: 1 });
-	// console.log("questions (theoryQuestionCheck):", questions);
-	// console.log("answers (theoryQuestionCheck):", answers);
+	console.log("questions (theoryQuestionCheck):", questions.length);
+	console.log("answers (theoryQuestionCheck):", answers);
 
 	return resultCount(answers, questions);
 };

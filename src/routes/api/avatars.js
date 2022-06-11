@@ -9,10 +9,18 @@ const { catchErrors, catchDownloadError } = require("../../middlewares/catchErro
 const router = express.Router();
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.resolve('../../../tmp'));
+        cb(null, path.resolve('./tmp'));
+    },
+    filename: (req, file, cb) => {
+        const [filename, extension] = file.originalname.split('.');
+        cb(null, `${filename}.${extension}`)
     }
 });
 
-router.post("/upload", uploadAvatar, catchErrors(catchDownloadError));
+const uploadmiddleware = multer({ storage })
+
+// const upload = multer({ dest: 'uploads/' })
+
+router.post("/upload", uploadmiddleware.single('avatar'), uploadAvatar, catchErrors(catchDownloadError));
 
 module.exports = router;

@@ -334,11 +334,19 @@
         }
       }
     },
-    "/contacts/:name": {
+    "/contacts/{name}": {
       "get": {
         "tags": ["Contacts"],
         "summary": "Contact information of the developer",
-        "parameters": [],
+        "parameters": [
+         { "in": "path",
+          "name": "name",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "Contact's name"
+        }],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -417,11 +425,16 @@
       "LoginResponse": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email",
-            "example": "user123@mail.com"
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user123@mail.com"
+              }
+            }
           },
           "token": {
             "type": "string",

@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require('multer');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const { uploadAvatar } = require("../../controllers/avatarsController");
 const { catchErrors, catchDownloadError } = require("../../middlewares/catchErrors");
 
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const [filename, extension] = file.originalname.split('.');
-        cb(null, `${filename}.${extension}`)
+        cb(null, `${uuidv4()}.${extension}`)
     }
 });
 

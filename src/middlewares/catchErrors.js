@@ -30,3 +30,13 @@ module.exports.catchLogErrors = middleware => {
     }
   };
 };
+
+module.exports.catchDownloadError = (middleware) => {
+  return async (req, res) => {
+    try {
+      await middleware(req, res);
+    } catch (err) {
+      res.status(500).json({ ResponseBody: { message: "Download error" } })
+    }
+  }
+};

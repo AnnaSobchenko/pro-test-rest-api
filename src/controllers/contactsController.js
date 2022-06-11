@@ -22,6 +22,12 @@ const downloadFile = async (req, res, next) => {
     return res.download(contact, name)
 }
 
+const downloadAvatar = async (req, res, next) => {
+    const name = req.params.name
+    const contact = `public/avatar/${name}`;
+    return res.download(contact, name)
+}
+
 module.exports = {
-    getContacts, getContact, downloadFile,
+    getContacts, getContact, downloadFile, downloadAvatar
 }

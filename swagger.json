@@ -333,6 +333,33 @@
           }
         }
       }
+    },
+    "/contacts/:name": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "Contact information of the developer",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactNameResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (no token provided)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -800,6 +827,61 @@
             }
           }
         ]
+      },
+      "ContactNameResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Contact's id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Contact's name"
+          },
+          "job_title": {
+            "type": "string",
+            "description": "Contact's team position"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "avatar file's name"
+          },
+          "links": {
+            "description": "Contact's links",
+            "type": "object",
+            "properties": {
+              "github": {
+                "type": "string",
+                "description": "Contact's link to GitHub"
+              },
+              "linkedin": {
+                "type": "string",
+                "description": "Contact's link to LinkedIn"
+              },
+              "resume": {
+                "type": "string",
+                "description": "Link to download resume"
+              }
+            }
+          }
+        },
+        "example": {
+          "_id": "62a06232c8899933cfbf4719",
+          "name": "Anna Sobchenko",
+          "job_title": "Team Lead",
+          "comment": "Your future is created what you do today not tomorrow.",
+          "avatar": "anna_sobchenko.jpg",
+          "links": {
+            "github": "https://github.com/AnnaSobchenko",
+            "linkedin": "https://www.linkedin.com/in/hanna-sobchenko/",
+            "resume": "anna_sobchenko.pdf"
+          }
+        }
       }
     },
     "securitySchemes": {

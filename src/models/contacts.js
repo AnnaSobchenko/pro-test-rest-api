@@ -8,35 +8,46 @@ const getAllContacts = async () => {
 };
 
 const getOneContact = async (name) => {
-    const result = await Contacts.findOne({name: name});
+    const result = await Contacts.findOne({ name: name });
     return result;
 };
 
-const addNewContact = async ({name, job_title, comment, avatar, links}) => {
+const addNewContact = async ({ name, job_title, comment, avatar, links }) => {
 
-    const {github, linkedin, email, resume} = links;
+    const { github, linkedin, email, resume } = links;
 
     const newContact = {
-        name, 
-        job_title, 
-        comment, 
-        avatar, 
-        "links" : {
-            github, 
-            linkedin, 
-            email, 
+        name,
+        job_title,
+        comment,
+        avatar,
+        "links": {
+            github,
+            linkedin,
+            email,
             resume
         },
     }
     try {
         const newContactS = await new Contacts(newContact);
-    await newContactS.save();
-    return newContactS;
+        await newContactS.save();
+        return newContactS;
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 };
 
+const updateOneContact = async (contactId, body) => {
+    try {
+        await Contacts.findByIdAndUpdate(contactId, {
+            $set: body,
+        });
+        return getContactById(contactId);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
-    getAllContacts, getOneContact, addNewContact,
+    getAllContacts, getOneContact, addNewContact, updateOneContact,
 }

@@ -23,7 +23,17 @@ const addContact = async (req, res, next) => {
         contentType: "application/json",
         ResponseBody: newContact,
     })
-}
+};
+
+const updateContact = async (req, res, next) =>{
+    const updatedContact = updateOneContact(req.params.contactId, req.body);
+    !updatedContact ? 
+    res.status(404).json({message: "Couldn't update contact"}) : 
+    res.status(201).json({
+        contentType: "application/json",
+        ResponseBody: updatedContact,
+    })
+};
 
 const downloadFile = async (req, res, next) => {
     const name = req.params.name
@@ -38,5 +48,5 @@ const downloadAvatar = async (req, res, next) => {
 };
 
 module.exports = {
-    getContacts, getContact, downloadFile, downloadAvatar, addContact
+    getContacts, getContact, downloadFile, downloadAvatar, addContact, updateContact
 };

@@ -5,16 +5,16 @@ const contactsSchema = new mongoose.Schema({
     type: String,
     required: [true, "Name is required"],
   },
-  job: {
+  job_title: {
     type: String,
     required: [true, "Job is required"],
   },
-  description: {
+  comment: {
     type: String,
     // required: [true, "Description is required"],
   },
   links: {
-    github : {
+    github: {
       type: String,
     },
     linkedin: {

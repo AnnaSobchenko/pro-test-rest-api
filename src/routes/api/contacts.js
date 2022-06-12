@@ -1,6 +1,7 @@
 const express = require("express");
-const { getContacts, getContact, downloadFile, downloadAvatar } = require("../../controllers/contactsController")
+const { getContacts, getContact, addContact, downloadFile, downloadAvatar } = require("../../controllers/contactsController")
 const { catchErrors, catchDownloadError } = require("../../middlewares/catchErrors");
+const authorize = require("../../middlewares/authorize");
 const { Contacts } = require("../../db/contactModel")
 
 const router = express.Router();
@@ -8,6 +9,8 @@ const router = express.Router();
 router.get("/", catchErrors(getContacts));
 
 router.get("/:name", catchErrors(getContact));
+
+router.post("/", catchErrors(addContact))
 
 router.get("/resume/:name", catchDownloadError(downloadFile));
 

@@ -12,6 +12,31 @@ const getOneContact = async (name) => {
     return result;
 };
 
+const addNewContact = async ({name, job_title, comment, avatar, links}) => {
+
+    const {github, linkedin, email, resume} = links;
+
+    const newContact = {
+        name, 
+        job_title, 
+        comment, 
+        avatar, 
+        "links" : {
+            github, 
+            linkedin, 
+            email, 
+            resume
+        },
+    }
+    try {
+        const newContactS = await new Contacts(newContact);
+    await newContactS.save();
+    return newContactS;
+    } catch (err) {
+        console.log(err)
+    }
+};
+
 module.exports = {
-    getAllContacts, getOneContact, 
+    getAllContacts, getOneContact, addNewContact,
 }

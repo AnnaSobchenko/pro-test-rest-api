@@ -67,7 +67,7 @@ const refreshMToken = async (token) => {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
   const refreshToken = jwt.sign({ sub: userOld._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN_TEST,
+    expiresIn: process.env.JWT_EXPIRES_IN_REFRESH,
   });
   const user = await Users.findOneAndUpdate(
     { token },

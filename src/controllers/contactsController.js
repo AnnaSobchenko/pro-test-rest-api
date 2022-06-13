@@ -18,7 +18,7 @@ const getContact = async (req, res, next) => {
 };
 
 const addContact = async (req, res, next) => {
-    const newContact = addNewContact(req.body);
+    const newContact = await addNewContact(req.body);
     res.status(201).json({
         contentType: "application/json",
         ResponseBody: newContact,
@@ -26,7 +26,8 @@ const addContact = async (req, res, next) => {
 };
 
 const updateContact = async (req, res, next) =>{
-    const updatedContact = updateOneContact(req.params.contactId, req.body);
+    const updatedContact = await updateOneContact(req.params.contactId, req.body);
+    console.log(req.params.contactId, req.body);
     !updatedContact ? 
     res.status(404).json({message: "Couldn't update contact"}) : 
     res.status(201).json({

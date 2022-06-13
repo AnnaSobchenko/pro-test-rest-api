@@ -13,6 +13,9 @@ const contactsSchema = new mongoose.Schema({
     type: String,
     // required: [true, "Description is required"],
   },
+  avatar: {
+    type: String,
+  },
   links: {
     github: {
       type: String,

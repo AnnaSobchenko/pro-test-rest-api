@@ -10,9 +10,9 @@ router.get("/", catchErrors(getContacts));
 
 router.get("/:name", catchErrors(getContact));
 
-router.post("/", authorize, catchErrors(addContact));
+router.post("/", catchErrors(addContact));
 
-router.put("/:contactId", authorize, catchErrors(updateContact)); // didn't work yet
+router.put("/:contactId", catchErrors(updateContact)); // didn't work yet
 
 router.get("/resume/:name", catchDownloadError(downloadFile));
 

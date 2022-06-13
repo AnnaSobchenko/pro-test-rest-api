@@ -38,11 +38,15 @@ const addNewContact = async ({ name, job_title, comment, avatar, links }) => {
 };
 
 const updateOneContact = async (contactId, body) => {
+    console.log(contactId);
+    console.log(body);
     try {
         await Contacts.findByIdAndUpdate(contactId, {
             $set: body,
         });
-        return getContactById(contactId);
+        console.log(contactId);
+        console.log(body);
+        return await Contacts.findById(contactId);
     } catch (err) {
         console.error(err);
     }

@@ -18,8 +18,6 @@ function randomQuestions(questions) {
 }
 
 function resultCount(answers, data) {
-	// console.log("answers:", answers);
-	// console.log("data:", data);
 	let result = 0;
 	answers.forEach((answer) => {
 		const element = data

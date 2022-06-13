@@ -38,20 +38,22 @@ const addNewContact = async ({ name, job_title, comment, avatar, links }) => {
 };
 
 const updateOneContact = async (contactId, body) => {
-    console.log(contactId);
-    console.log(body);
     try {
         await Contacts.findByIdAndUpdate(contactId, {
             $set: body,
         });
-        console.log(contactId);
-        console.log(body);
         return await Contacts.findById(contactId);
     } catch (err) {
         console.error(err);
     }
-}
+};
+
+const deleteContactById = async (contactId) => {
+    console.log(contactId);
+    const newContacts = await Contacts.findByIdAndRemove(contactId);
+    return newContacts;
+};
 
 module.exports = {
-    getAllContacts, getOneContact, addNewContact, updateOneContact,
+    getAllContacts, getOneContact, addNewContact, updateOneContact, deleteContactById,
 }

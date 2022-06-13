@@ -1,5 +1,5 @@
 const { Contacts } = require("../db/contactModel");
-const { getAllContacts, getOneContact, addNewContact } = require("../models/contacts")
+const { getAllContacts, getOneContact, addNewContact, deleteContactById, updateOneContact } = require("../models/contacts")
 
 const getContacts = async (req, res, next) => {
     const contacts = await getAllContacts();
@@ -36,18 +36,26 @@ const updateContact = async (req, res, next) =>{
     })
 };
 
+const deleteContact = async (req, res, next) => {
+    console.log(req.params.contactId);
+    const contacts = await deleteContactById(req.params.contactId);
+    !contacts
+    ? res.status(404).json({ message: "Contact not found" })
+    : res.status(200).json({ message: "Сontact deleted" });
+}
+
 const downloadFile = async (req, res, next) => {
     const name = req.params.name
     const contact = `public/resume/${name}`;
-    return res.download(contact, name)
+    res.download(contact, name)
 };
 
 const downloadAvatar = async (req, res, next) => {
     const name = req.params.name
     const contact = `public/avatar/${name}`;
-    return res.download(contact, name)
+    res.download(contact, name)
 };
 
 module.exports = {
-    getContacts, getContact, downloadFile, downloadAvatar, addContact, updateContact
+    getContacts, getContact, downloadFile, downloadAvatar, addContact, updateContact, deleteContact,
 };

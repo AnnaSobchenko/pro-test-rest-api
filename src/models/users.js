@@ -6,7 +6,7 @@ const uuid = require("uuid");
 
 require("dotenv").config();
 
-const signupUser = async body => {
+const signupUser = async (body) => {
   const { email, password } = body;
   await Users.create({
     email,
@@ -24,7 +24,7 @@ const signupUser = async body => {
   return user;
 };
 
-const loginUser = async body => {
+const loginUser = async (body) => {
   const { email, password } = body;
   let user = await Users.findOne({ email });
   const isPasswordCorrect = await bcryptjs.compare(password, user.password);
@@ -32,12 +32,21 @@ const loginUser = async body => {
     const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    user = await Users.findOneAndUpdate({ email }, { token }, { new: true });
+
+    const refreshToken = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN_REFRESH,
+    });
+    user = await Users.findOneAndUpdate(
+      { email },
+      { token, refreshToken },
+      { new: true }
+    );
+    console.log("user :>> ", user);
     return user;
   }
 };
 
-const logoutUser = async token => {
+const logoutUser = async (token) => {
   const user = await Users.findOneAndUpdate(
     { token },
     { token: null },
@@ -46,23 +55,23 @@ const logoutUser = async token => {
   return user;
 };
 
-const currentUser = async token => {
+const currentUser = async (token) => {
   const user = await Users.findOne({ token }, { email: 1, _id: 0 });
   return user;
 };
 
-const refreshMToken = async token => {
-  const userOld = await Users.findOne({ token }, { email: 1, _id: 0 });
+const refreshMToken = async (token) => {
+  userOld = await Users.findOne({ token }, { email: 1, _id: 1 });
+
   const accessToken = jwt.sign({ sub: userOld._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
   const refreshToken = jwt.sign({ sub: userOld._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+    expiresIn: process.env.JWT_EXPIRES_IN_TEST,
   });
-
   const user = await Users.findOneAndUpdate(
-    { token: accessToken },
-    { refreshToken },
+    { token },
+    { token: accessToken, refreshToken: refreshToken },
     { new: true }
   );
 

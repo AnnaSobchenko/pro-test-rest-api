@@ -6,6 +6,7 @@ const {
 } = require("../models/questions");
 
 const getQuestion = async (req, res, next) => {
+  console.log("req.params :>> ", req.params);
   const questions = await userQuestion(req.params);
   res.status(200).send(questions);
 };
@@ -26,8 +27,7 @@ const checkQuestion = async (req, res, next) => {
 };
 
 module.exports = {
-  // getTechnicalQuestion,
-  // getTheoryQuestion,
+  getQuestion,
   // checkTheoryQuestion,
   // checkTechnicalQuestion,
   checkQuestion,

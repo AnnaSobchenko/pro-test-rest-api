@@ -55,28 +55,47 @@ const userQuestion = async (testingType) => {
   }
 };
 
-const technicalQuestionCheck = async (answers) => {
-  const questions = await QuestionTechnical.find(
-    {},
-    { _id: 1, rightAnswer: 1 }
-  );
-  console.log("questions (technicalQuestionCheck):", questions.length);
-  console.log("answers (technicalQuestionCheck):", answers);
-  return resultCount(answers, questions);
-};
+// const technicalQuestionCheck = async (answers) => {
+// 	const questions = await QuestionTechnical.find(
+// 		{},
+// 		{ _id: 1, rightAnswer: 1 }
+// 	);
+// 	console.log("questions (technicalQuestionCheck):", questions.length);
+// 	console.log("answers (technicalQuestionCheck):", answers);
+// 	return resultCount(answers, questions);
+// };
 
-const theoryQuestionCheck = async (answers) => {
-  const questions = await QuestionTheory.find({}, { _id: 1, rightAnswer: 1 });
-  console.log("questions (theoryQuestionCheck):", questions.length);
-  console.log("answers (theoryQuestionCheck):", answers);
+// const theoryQuestionCheck = async (answers) => {
+// 	const questions = await QuestionTheory.find({}, { _id: 1, rightAnswer: 1 });
+// 	console.log("questions (theoryQuestionCheck):", questions.length);
+// 	console.log("answers (theoryQuestionCheck):", answers);
+
+// 	return resultCount(answers, questions);
+// };
+
+const questionCheck = async (type, answers) => {
+  console.log("type: ", type);
+  if (type === "theory") {
+    const questions = await QuestionTheory.find({}, { _id: 1, rightAnswer: 1 });
+  }
+
+  if (type === "technical") {
+    const questions = await QuestionTechnical.find(
+      {},
+      { _id: 1, rightAnswer: 1 }
+    );
+  }
+
+  console.log("questions (questionCheck):", questions.length);
+  console.log("answers (questionCheck):", answers);
 
   return resultCount(answers, questions);
 };
 
 module.exports = {
   userQuestion,
-  //   theoryQuestion,
-  //   technicalQuestion,
-  technicalQuestionCheck,
-  theoryQuestionCheck,
+
+  // technicalQuestionCheck,
+  // theoryQuestionCheck,
+  questionCheck,
 };

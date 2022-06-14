@@ -26,8 +26,8 @@ const checkQuestion = async (req, res, next) => {
 };
 
 module.exports = {
-  getTechnicalQuestion,
-  getTheoryQuestion,
+  // getTechnicalQuestion,
+  // getTheoryQuestion,
   // checkTheoryQuestion,
   // checkTechnicalQuestion,
   checkQuestion,

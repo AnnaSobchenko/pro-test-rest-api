@@ -68,7 +68,6 @@ const questionCheck = async (type, answers) => {
       { _id: 1, rightAnswer: 1 }
     );
     return resultCount(answers, questions);
-     
   }
 };
 

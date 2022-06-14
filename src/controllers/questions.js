@@ -1,7 +1,7 @@
 const {
   userQuestion,
   questionCheck,
-} = require("../models/questions");
+} = require("../services/questions");
 
 const getQuestion = async (req, res, next) => {
   const questions = await userQuestion(req.params);

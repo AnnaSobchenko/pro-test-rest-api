@@ -10,7 +10,7 @@ const {
   getQuestion,
 } = require("../../controllers/questions");
 
-router.get("/:questions", catchErrors(getQuestion));
+router.get("/:type", catchErrors(getQuestion));
 
 router.post("/theory/check", catchErrors(checkTheoryQuestion));
 router.post("/technical/check", catchErrors(checkTechnicalQuestion));

@@ -33,7 +33,7 @@ function resultCount(answers, data) {
 
 const userQuestion = async (testingType) => {
   const { type } = testingType;
-
+  console.log("type :>> ", type);
   if (type === "QA technical training") {
     const technicalQuestions = await QuestionTechnical.find(
       {},

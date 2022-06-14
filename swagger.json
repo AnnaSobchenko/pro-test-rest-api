@@ -188,11 +188,21 @@
         }
       }
     },
-    "/test/technical": {
+    "/test/{type}": {
       "get": {
         "tags": ["QA-tests"],
-        "summary": "Get QA technical test questions",
-        "parameters": [],
+        "summary": "Get QA test questions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Testing type"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -215,76 +225,21 @@
         }
       }
     },
-    "/test/theory": {
-      "get": {
-        "tags": ["QA-tests"],
-        "summary": "Get QA theory test questions",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/QATestResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (no token provided)",
-            "content": {}
-          },
-          "401": {
-            "description": "Unauthorized (invalid access token)",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/test/technical/check": {
+    "/test/check/{type}": {
       "post": {
         "tags": ["QA-tests"],
-        "summary": "Get QA technical test result",
-        "parameters": [],
-        "requestBody": {
-          "description": "Answers",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QATestResultRequest"
-              }
-            }
+        "summary": "Get QA test result",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Testing type"
           }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/QATestResultResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (no token provided)",
-            "content": {}
-          },
-          "401": {
-            "description": "Unauthorized (invalid access token)",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/test/theory/check": {
-      "post": {
-        "tags": ["QA-tests"],
-        "summary": "Get QA theory test result",
-        "parameters": [],
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -339,14 +294,16 @@
         "tags": ["Contacts"],
         "summary": "Contact information of the developer",
         "parameters": [
-         { "in": "path",
-          "name": "name",
-          "schema": {
-            "type": "string"
-          },
-          "required": true,
-          "description": "Contact's name"
-        }],
+          {
+            "in": "path",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Contact's name"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",

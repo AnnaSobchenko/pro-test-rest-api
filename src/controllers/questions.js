@@ -1,7 +1,5 @@
 const {
   userQuestion,
-  // technicalQuestion,
-  // theoryQuestion,
   theoryQuestionCheck,
   technicalQuestionCheck,
 } = require("../models/questions");
@@ -10,11 +8,6 @@ const getQuestion = async (req, res, next) => {
   const questions = await userQuestion(req.params);
   res.status(200).send(questions);
 };
-
-// const getTechnicalQuestion = async (req, res, next) => {
-//   const questions = await technicalQuestion();
-//   res.status(200).send(questions);
-// };
 
 const checkTheoryQuestion = async (req, res, next) => {
   const result = await theoryQuestionCheck(req.body);

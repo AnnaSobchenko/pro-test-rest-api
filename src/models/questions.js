@@ -34,7 +34,7 @@ function resultCount(answers, data) {
 const userQuestion = async (testingType) => {
   const { questions } = testingType;
 
-  if (questions === "QA technical training") {
+  if (questions === "technical") {
     const technicalQuestions = await QuestionTechnical.find(
       {},
       { _id: 1, question: 1, answers: 1 }
@@ -45,7 +45,7 @@ const userQuestion = async (testingType) => {
     return getRandomTechnicalQuestion;
   }
 
-  if (questions === "Testing theory") {
+  if (questions === "theory") {
     const theoryQuestions = await QuestionTheory.find(
       {},
       { _id: 1, question: 1, answers: 1 }
@@ -54,15 +54,6 @@ const userQuestion = async (testingType) => {
     return getRandomTheoryQuestions;
   }
 };
-
-// const theoryQuestion = async () => {
-// 	const questions = await QuestionTheory.find(
-// 		{},
-// 		{ _id: 1, question: 1, answers: 1 }
-// 	);
-// 	const getRandomQuestion = await randomQuestions(questions);
-// 	return getRandomQuestion;
-// };
 
 const technicalQuestionCheck = async (answers) => {
   const questions = await QuestionTechnical.find(

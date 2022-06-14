@@ -11,7 +11,7 @@ const {
 } = require("../../controllers/questions");
 
 router.get("/:questions", catchErrors(getQuestion));
-// router.get("/technical", catchErrors(getTechnicalQuestion));
+
 router.post("/theory/check", catchErrors(checkTheoryQuestion));
 router.post("/technical/check", catchErrors(checkTechnicalQuestion));
 

@@ -15,16 +15,10 @@ const signupUserControl = async (req, res, next) => {
 };
 
 const signinUserControl = async (req, res, next) => {
-  const { token, email, refreshToken } = await loginUser(req.body);
+  const user = await loginUser(req.body);
   res.status(201).json({
     contentType: "application/json",
-    ResponseBody: {
-      user: {
-        email: email,
-      },
-      token: token,
-      refreshToken: refreshToken,
-    },
+    ResponseBody: user,
   });
 };
 
@@ -40,7 +34,6 @@ const currentUserControl = async (req, res, next) => {
 
 const refreshTokenControl = async (req, res, next) => {
   const user = await refreshMToken(req.user.token);
-  console.log("refreshToken :>> ", user);
   res.status(200).send(user);
 };
 

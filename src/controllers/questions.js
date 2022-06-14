@@ -1,8 +1,9 @@
 const {
-	technicalQuestion,
-	theoryQuestion,
-	theoryQuestionCheck,
-	technicalQuestionCheck,
+  technicalQuestion,
+  theoryQuestion,
+  // theoryQuestionCheck,
+  // technicalQuestionCheck,
+  questionCheck,
 } = require("../models/questions");
 
 const getTheoryQuestion = async (req, res, next) => {
@@ -15,19 +16,26 @@ const getTechnicalQuestion = async (req, res, next) => {
   res.status(200).send(questions);
 };
 
-const checkTheoryQuestion = async (req, res, next) => {
-	const questions = await theoryQuestionCheck();
-	res.status(200).send(questions);
+// const checkTheoryQuestion = async (req, res, next) => {
+//   const result = await theoryQuestionCheck(req.body);
+//   res.status(200).send({"rightAnswers": result});
+// };
+
+// const checkTechnicalQuestion = async (req, res, next) => {
+//   const result = await technicalQuestionCheck(req.body);
+//   res.status(200).send({"rightAnswers": result });
+// };
+
+const checkQuestion = async (req, res, next) => {
+	const result = await questionCheck(req.params.type, req.body);
+	res.status(200).send({ rightAnswers: result });
 };
 
-const checkTechnicalQuestion = async (req, res, next) => {
-	const questions = await technicalQuestionCheck();
-	res.status(200).send(questions);
-};
 
 module.exports = {
-	getTechnicalQuestion,
-	getTheoryQuestion,
-	checkTheoryQuestion,
-	checkTechnicalQuestion,
+  getTechnicalQuestion,
+  getTheoryQuestion,
+  // checkTheoryQuestion,
+  // checkTechnicalQuestion,
+  checkQuestion,
 };

@@ -1,11 +1,29 @@
 const express = require("express");
-const {getContacts, getContact} = require("../../controllers/contactsController")
-const { catchErrors } = require("../../middlewares/catchErrors");
+const { getContacts, 
+    getContact, 
+    addContact, 
+    updateContact, 
+    downloadFile, 
+    downloadAvatar,
+    deleteContact } = require("../../controllers/contactsController")
+const { catchErrors, catchDownloadError } = require("../../middlewares/catchErrors");
+const authorize = require("../../middlewares/authorize");
+const { Contacts } = require("../../db/contactModel")
 
 const router = express.Router();
 
 router.get("/", catchErrors(getContacts));
 
-router.get("/contact"), catchErrors(getContact);
+router.get("/:name", catchErrors(getContact));
+
+router.post("/", catchErrors(addContact));
+
+router.put("/:contactId", catchErrors(updateContact)); // didn't work yet
+
+router.delete("/:contactId", catchErrors(deleteContact));
+
+router.get("/resume/:name", catchDownloadError(downloadFile));
+
+router.get("/avatar/:name", catchDownloadError(downloadAvatar));
 
 module.exports = router;

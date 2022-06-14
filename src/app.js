@@ -8,9 +8,9 @@ require("dotenv").config();
 const usersRouter = require("./routes/api/users");
 const questionsRouter = require("./routes/api/questions");
 const contactsRouter = require("./routes/api/contacts");
+const avatarsRouter = require("./routes/api/avatars");
 
 const app = express();
-// const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../swagger.json");
 
@@ -25,7 +25,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", usersRouter);
 app.use("/test", questionsRouter);
 app.use("/contacts", contactsRouter);
-// app.use("/avatars", express.static("public/avatars"));
+app.use("/avatars", avatarsRouter);
+app.use(express.static("public"));
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found, app" });

@@ -4,7 +4,7 @@ const {
   logoutUser,
   currentUser,
   refreshMToken,
-} = require("../models/users");
+} = require("../services/users");
 
 const signupUserControl = async (req, res, next) => {
   const user = await signupUser(req.body);

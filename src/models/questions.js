@@ -1,52 +1,58 @@
 const { QuestionTechnical, QuestionTheory } = require("../db/questionsModel");
 
 function randomQuestions(questions) {
-	let numQuestionsArr = [];
-	let questionsTwelve = [];
-	let random = 0;
-	for (let i = 0; i < 12; i++) {
-		random = Math.floor(Math.random() * questions.length);
-		if (!numQuestionsArr.includes(random)) {
-			numQuestionsArr[i] = random;
-		} else {
-			i = i - 1;
-		}
-	}
-	numQuestionsArr.map((el) => questionsTwelve.push(questions[el]));
+  let numQuestionsArr = [];
+  let questionsTwelve = [];
+  let random = 0;
+  for (let i = 0; i < 12; i++) {
+    random = Math.floor(Math.random() * questions.length);
+    if (!numQuestionsArr.includes(random)) {
+      numQuestionsArr[i] = random;
+    } else {
+      i = i - 1;
+    }
+  }
+  numQuestionsArr.map((el) => questionsTwelve.push(questions[el]));
 
-	return questionsTwelve;
+  return questionsTwelve;
 }
 
 function resultCount(answers, data) {
-	let result = 0;
-	answers.forEach((answer) => {
-		const element = data
-			.map((el) => el._id.toString())
-			.indexOf(answer.questionId);
-		if (data[element].rightAnswer === answer.userAnswer) {
-			result += 1;
-		}
-	});
-	console.log("rightAnswers: ", result);
-	return result;
+  let result = 0;
+  answers.forEach((answer) => {
+    const element = data
+      .map((el) => el._id.toString())
+      .indexOf(answer.questionId);
+    if (data[element].rightAnswer === answer.userAnswer) {
+      result += 1;
+    }
+  });
+  console.log("rightAnswers: ", result);
+  return result;
 }
 
-const technicalQuestion = async () => {
-	const questions = await QuestionTechnical.find(
-		{},
-		{ _id: 1, question: 1, answers: 1 }
-	);
-	const getRandomQuestion = await randomQuestions(questions);
-	return getRandomQuestion;
-};
+const userQuestion = async (testingType) => {
+  const { type } = testingType;
 
-const theoryQuestion = async () => {
-	const questions = await QuestionTheory.find(
-		{},
-		{ _id: 1, question: 1, answers: 1 }
-	);
-	const getRandomQuestion = await randomQuestions(questions);
-	return getRandomQuestion;
+  if (type === "QA technical training") {
+    const technicalQuestions = await QuestionTechnical.find(
+      {},
+      { _id: 1, question: 1, answers: 1 }
+    );
+    const getRandomTechnicalQuestion = await randomQuestions(
+      technicalQuestions
+    );
+    return getRandomTechnicalQuestion;
+  }
+
+  if (type === "Testing theory") {
+    const theoryQuestions = await QuestionTheory.find(
+      {},
+      { _id: 1, question: 1, answers: 1 }
+    );
+    const getRandomTheoryQuestions = await randomQuestions(theoryQuestions);
+    return getRandomTheoryQuestions;
+  }
 };
 
 // const technicalQuestionCheck = async (answers) => {
@@ -68,28 +74,28 @@ const theoryQuestion = async () => {
 // };
 
 const questionCheck = async (type, answers) => {
-	console.log("type: ", type);
-	if (type === "theory") {
-		const questions = await QuestionTheory.find({}, { _id: 1, rightAnswer: 1 });
-	}
+  console.log("type: ", type);
+  if (type === "theory") {
+    const questions = await QuestionTheory.find({}, { _id: 1, rightAnswer: 1 });
+  }
 
-	if (type === "technical") {
-		const questions = await QuestionTechnical.find(
-			{},
-			{ _id: 1, rightAnswer: 1 }
-		);
-	}
+  if (type === "technical") {
+    const questions = await QuestionTechnical.find(
+      {},
+      { _id: 1, rightAnswer: 1 }
+    );
+  }
 
-	console.log("questions (questionCheck):", questions.length);
-	console.log("answers (questionCheck):", answers);
+  console.log("questions (questionCheck):", questions.length);
+  console.log("answers (questionCheck):", answers);
 
-	return resultCount(answers, questions);
+  return resultCount(answers, questions);
 };
 
 module.exports = {
-	theoryQuestion,
-	technicalQuestion,
-	// technicalQuestionCheck,
-	// theoryQuestionCheck,
-	questionCheck,
+  userQuestion,
+
+  // technicalQuestionCheck,
+  // theoryQuestionCheck,
+  questionCheck,
 };

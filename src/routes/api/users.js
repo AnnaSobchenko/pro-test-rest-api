@@ -1,27 +1,27 @@
 const express = require("express");
 const authorize = require("../../middlewares/authorize");
 const {
-  signupUserControl,
-  signinUserControl,
-  logoutUserControl,
-  currentUserControl,
-  refreshTokenControl,
+	signupUserControl,
+	signinUserControl,
+	logoutUserControl,
+	currentUserControl,
+	refreshTokenControl,
 } = require("../../controllers/users");
-const { postAuthValidation } = require("../../middlewares/validationSchema");
+const { schemas } = require("../../db/questionsModel");
 const {
-  catchLogErrors,
-  catchSignupErrors,
-  catchErrors,
+	catchLogErrors,
+	catchSignupErrors,
+	catchErrors,
 } = require("../../middlewares/catchErrors");
 
 const router = express.Router();
 
 router.post(
-  "/signup",
-  postAuthValidation,
-  catchSignupErrors(signupUserControl)
+	"/signup",
+	schemas.postAuthValidation,
+	catchSignupErrors(signupUserControl)
 );
-router.post("/login", postAuthValidation, catchLogErrors(signinUserControl));
+router.post("/login", schemas.postAuthValidation, catchLogErrors(signinUserControl));
 router.post("/logout", authorize, catchErrors(logoutUserControl));
 router.get("/current", authorize, catchErrors(currentUserControl));
 router.post("/refresh", authorize, catchErrors(refreshTokenControl));

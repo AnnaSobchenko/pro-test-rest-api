@@ -37,6 +37,15 @@ const loginUser = async body => {
   }
 };
 
+// const loginWithGoogle = async () => {
+//   const user = await Users.findOne({ email });
+//   const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
+//     expiresIn: process.env.JWT_EXPIRES_IN
+//   });
+//   const updatedUser = await Users.findOneAndUpdate({ email }, { token }, { new: true });
+//   return updatedUser;
+// }
+
 const logoutUser = async token => {
   const user = await Users.findOneAndUpdate(
     { token },
@@ -75,4 +84,5 @@ module.exports = {
   logoutUser,
   currentUser,
   refreshMToken,
+  // loginWithGoogle
 };

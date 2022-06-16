@@ -22,7 +22,7 @@ const uploadmiddleware = multer({ storage })
 
 // const upload = multer({ dest: 'uploads/' })
 // загрузити: 
-router.post("/upload", uploadmiddleware.single('avatar'), uploadAvatar, catchErrors(catchDownloadError));
+router.post("/upload/:name", uploadmiddleware.single('avatar'), uploadAvatar, catchErrors(catchDownloadError));
 
 // скачати: router.use("/download", express.static(path.resolve('./tmp'));
 

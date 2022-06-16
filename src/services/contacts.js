@@ -42,12 +42,18 @@ const updateOneContact = async (contactId, body) => {
         await Contacts.findByIdAndUpdate(contactId, {
             $set: body,
         });
-        return getContactById(contactId);
+        return await Contacts.findById(contactId);
     } catch (err) {
         console.error(err);
     }
-}
+};
+
+const deleteContactById = async (contactId) => {
+    console.log(contactId);
+    const newContacts = await Contacts.findByIdAndRemove(contactId);
+    return newContacts;
+};
 
 module.exports = {
-    getAllContacts, getOneContact, addNewContact, updateOneContact,
+    getAllContacts, getOneContact, addNewContact, updateOneContact, deleteContactById,
 }

@@ -11,7 +11,6 @@ const contactsRouter = require("./routes/api/contacts");
 const avatarsRouter = require("./routes/api/avatars");
 
 const app = express();
-// const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../swagger.json");
 

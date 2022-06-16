@@ -4,7 +4,7 @@ const {
   logoutUser,
   currentUser,
   refreshMToken,
-} = require("../models/users");
+} = require("../services/users");
 
 const signupUserControl = async (req, res, next) => {
   const user = await signupUser(req.body);
@@ -15,15 +15,10 @@ const signupUserControl = async (req, res, next) => {
 };
 
 const signinUserControl = async (req, res, next) => {
-  const { token, email } = await loginUser(req.body);
+  const user = await loginUser(req.body);
   res.status(201).json({
     contentType: "application/json",
-    ResponseBody: {
-      user: {
-        email: email,
-      },
-      token: token,
-    },
+    ResponseBody: user,
   });
 };
 
@@ -38,8 +33,8 @@ const currentUserControl = async (req, res, next) => {
 };
 
 const refreshTokenControl = async (req, res, next) => {
-  const refreshToken = await refreshMToken(req.user.token);
-  res.status(200).send(refreshToken);
+  const user = await refreshMToken(req.user.token);
+  res.status(200).send(user);
 };
 
 module.exports = {

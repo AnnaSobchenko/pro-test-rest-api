@@ -37,10 +37,19 @@ const refreshTokenControl = async (req, res, next) => {
   res.status(200).send(user);
 };
 
+const googleSignIn = async (req, res, next) => {
+  const user = await loginWithGoogle(req.body);
+  res.status(201).json({
+    contentType: "application/json",
+    ResponseBody: user,
+  });
+};
+
 module.exports = {
   signupUserControl,
   signinUserControl,
   logoutUserControl,
   currentUserControl,
   refreshTokenControl,
+  googleSignIn
 };
